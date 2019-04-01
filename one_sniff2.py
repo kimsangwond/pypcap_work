@@ -4,7 +4,7 @@
 
 
 from scapy.all import*
-import netifaces
+import ifaddr
 
 def one_packet(packet):
     src_add = packet[0][1].src
@@ -22,8 +22,12 @@ def one_sniff(filte, iface):
 
 
 if __name__ == '__main__':
-    b=netifaces.gateways()
-    print(b)
+    adapters = ifaddr.get_adapters()
+    for adapter in adapters:
+        print ("IPs of network adapter " + adapter.nice_name)
+        for ip in adapter.ips:
+            print ("   %s/%s" % (ip.ip, ip.network_prefix))
+
     conf.iface = input('input nic: ')
     print ("ip")
     print ("tcp")
