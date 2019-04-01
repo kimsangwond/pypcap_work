@@ -1,6 +1,9 @@
 #!/usr/bin/python  
+# -*- coding: cp949 -*-b
+# -*- coding:utf-8 -*-
+
+
 from scapy.all import*  
-  
   
 def one_packet(packet):
     src_add = packet[0][1].src  
@@ -13,13 +16,11 @@ def one_packet(packet):
     print ("protocol: %s, source: %s, destination: %s" %(proto, src_add, dst_add))
   
   
-def one_sniff(filter):
-    sniff(filter=filter, prn=one_packet, count=20)
-    #filter: 원하는 프로토콜만 볼 수 있게 지정/ 삭제 가능
-    #prn: packet에 캡쳐한 내용을 sniff에게 전달하는 함수 설정
-    #count: packet 캡쳐 개수 지정
+def one_sniff(filte, iface):
+    sniff(iface=iface, filter=filte, prn=one_packet, count=20)
 
   
-if __name__ == '__main__':  
-    filter = 'ip'
-    one_sniff(filter)  
+if __name__ == '__main__': 
+    conf.iface = input('input nic: ')
+    filte = input('input protocol: ')
+    one_sniff(filte, conf.iface)
